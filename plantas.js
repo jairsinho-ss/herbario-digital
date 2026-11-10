@@ -265,7 +265,7 @@ const plantas = [];
 for (let numero = 1; numero <= 25; numero++) {
     plantas.push({
         numero: numero,
-        imagen: `imagenes/Planta${String(numero).padStart(2, "0")}.jpg.jpeg`,
+        imagen: `imagenes/planta${String(numero).padStart(2, "0")}.jpg.jpeg`,
         nombreComun: nombresComunes[numero] || "Nombre por identificar",
         nombreCientifico: nombresCientificos[numero] || "Por identificar",
         familia: familiasBotanicas[numero] || "Por identificar",
