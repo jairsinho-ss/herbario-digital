@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herbario Botánico Digital</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background:
+                linear-gradient(rgba(10, 45, 25, 0.75), rgba(10, 45, 25, 0.75)),
+                url("imagenes/Planta01.jpg.jpeg");
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        .portada {
+            padding: 40px 25px;
+            max-width: 850px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: normal;
+            margin-bottom: 25px;
+        }
+
+        p {
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .boton {
+            display: inline-block;
+            padding: 16px 35px;
+            background: #a5c98a;
+            color: #173b25;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            font-size: 18px;
+            transition: 0.3s;
+            margin-bottom: 30px;
+        }
+
+        .boton:hover {
+            background: white;
+            transform: scale(1.05);
+        }
+
+        .integrantes {
+            background: rgba(15, 50, 30, 0.75);
+            padding: 22px 30px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            margin-top: 5px;
+        }
+
+        .integrantes h3 {
+            font-size: 17px;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            color: #c5e4a8;
+        }
+
+        .integrantes p {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+
+        .datos-academicos {
+            margin-top: 20px;
+        }
+
+        .datos-academicos p {
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="portada">
+
+        <h2>UNIVERSIDAD AUTÓNOMA DE CHIAPAS</h2>
+        <h2>Facultad de Ciencias Agrícolas · Campus IV</h2>
+
+        <h1>Herbario Botánico Digital</h1>
+
+        <p>
+            Bienvenidos a nuestro herbario digital, un espacio dedicado
+            a la recopilación, identificación y descripción de especies
+            vegetales, con información sobre sus características botánicas
+            y distribución geográfica.
+        </p>
+
+       <a href="herbario.html" class="boton">INGRESAR AL HERBARIO</a>
+
+        <div class="integrantes">
+
+            <h3>INTEGRANTES DEL EQUIPO</h3>
+
+            <p>
+                Diego Jair Ruiz de León<br>
+                Eder Francisco Serrano Reyes<br>
+                Jesús Alexander Balanzar Velázquez<br>
+                Ángel Joseph Arroyo Ibarra<br>
+                Irvin Moisés Villatoro Martínez
+            </p>
+
+        </div>
+
+        <div class="datos-academicos">
+
+            <p>
+                <strong>Docente:</strong> Imna Yolanda Trigueros Vázquez<br>
+                <strong>Materia:</strong> Botánica Sistemática<br>
+                <strong>Grupo:</strong> 3° F
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

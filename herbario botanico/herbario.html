@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herbario Digital</title>
+
+    <!-- Leaflet: estilos del mapa -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --verde-bosque: #173f2b;
+            --verde-hoja: #356b46;
+            --verde-salvia: #dce8d6;
+            --crema: #f7f6ef;
+            --texto: #263b2a;
+            --borde: #e0e7d9;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--crema);
+            color: var(--texto);
+            line-height: 1.7;
+        }
+
+        header {
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 90% 15%, #ffffff14, transparent 30%),
+                linear-gradient(135deg, #102f20, #285d3d 65%, #477951);
+            color: white;
+            padding: 75px 20px 85px;
+            text-align: center;
+            border-bottom: 5px solid #b8c995;
+        }
+
+        header h1 {
+            margin: 0 0 14px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            max-width: 650px;
+            margin: 0 auto;
+            color: #e1ebdf;
+            font-size: 17px;
+        }
+
+        .volver {
+            display: inline-block;
+            margin-top: 22px;
+            padding: 9px 20px;
+            border: 1px solid #dce8d6;
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .volver:hover {
+            background: #ffffff20;
+        }
+
+        main {
+            max-width: 1150px;
+            margin: 45px auto;
+            padding: 0 22px;
+        }
+
+        .busqueda {
+            max-width: 850px;
+            margin: -5px auto 40px;
+            padding: 32px;
+            background: #fffefa;
+            border: 1px solid var(--borde);
+            border-radius: 20px;
+            box-shadow: 0 12px 35px #173f2b12;
+        }
+
+        .busqueda h2 {
+            margin: 0 0 8px;
+            color: var(--verde-bosque);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 27px;
+            text-align: center;
+        }
+
+        .busqueda p {
+            margin: 0 0 22px;
+            color: #6c7b6a;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .busqueda input {
+            display: block;
+            width: 100%;
+            padding: 17px 20px;
+            background: #fff;
+            border: 1px solid #cbd8c7;
+            border-radius: 13px;
+            color: var(--texto);
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .busqueda input::placeholder {
+            color: #899589;
+        }
+
+        .busqueda input:focus {
+            border-color: var(--verde-hoja);
+            box-shadow: 0 0 0 4px #4b80551c;
+        }
+
+        #coleccion {
+            margin-top: 28px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        #coleccion article {
+            min-width: 0;
+            background: #fffefa;
+            border: 1px solid var(--borde);
+            border-radius: 16px;
+            box-shadow: 0 4px 16px #243f2b0b;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #coleccion article:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px #00000012;
+        }
+
+        #coleccion article img {
+            display: block;
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        #coleccion article h3 {
+            color: var(--verde-bosque);
+            margin: 18px 0 12px;
+            font-size: 17px;
+            letter-spacing: 0.8px;
+        }
+
+        #coleccion article p {
+            font-size: 14px;
+            overflow-wrap: anywhere;
+            margin: 10px 0;
+        }
+
+        .mensaje {
+            margin-top: 25px;
+            padding: 30px;
+            text-align: center;
+            background: #fffefa;
+            border: 2px dashed #b6c9b5;
+            border-radius: 14px;
+            color: #637563;
+        }
+
+        #seccion-mapa {
+            margin-top: 45px;
+        }
+
+        #mapa {
+            height: 450px;
+            width: 100%;
+            border-radius: 14px;
+            border: 1px solid #485c35;
+            z-index: 1;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            background: #e8eee3;
+            color: #526b54;
+            font-size: 14px;
+            border-top: 1px solid #d8e2d2;
+        }
+
+        @media (max-width: 850px) {
+            #coleccion {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 18px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            header {
+                padding: 52px 18px 62px;
+            }
+
+            header p {
+                font-size: 15px;
+            }
+
+            main {
+                margin: 28px auto;
+                padding: 0 14px;
+            }
+
+            .busqueda {
+                padding: 23px 18px;
+                border-radius: 16px;
+            }
+
+            .busqueda h2 {
+                font-size: 23px;
+            }
+
+            #coleccion {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            #coleccion article img {
+                height: 240px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🌿 Herbario Digital</h1>
+        <p>Exploración y registro de la diversidad vegetal</p>
+
+        <a href="index.html" class="volver">← Volver a la portada</a>
+    </header>
+
+    <main>
+
+        <section class="busqueda">
+
+            <h2>Buscar plantas</h2>
+
+            <p>
+                Explora nuestra colección de plantas y encuentra cada
+                ejemplar por su nombre común o científico.
+            </p>
+
+            <input
+                type="search"
+                placeholder="Busca por nombre común o científico..."
+                aria-label="Buscar plantas"
+            >
+
+        </section>
+
+        <section>
+
+            <h2>🌿 Colección botánica</h2>
+
+            <div id="coleccion"></div>
+
+        </section>
+
+        <section id="seccion-mapa">
+
+            <h2>📍 Ubicación de las plantas</h2>
+
+            <p>
+                Explora la ubicación de los ejemplares registrados
+                en nuestro herbario digital.
+            </p>
+
+            <div id="mapa"></div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        Herbario Digital · Registro de especies vegetales
+    </footer>
+
+    <!-- Leaflet: funcionamiento del mapa -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Archivo JavaScript del herbario -->
+    <script src="plantas.js"></script>
+
+</body>
+</html>
